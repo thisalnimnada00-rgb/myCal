@@ -2,380 +2,671 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEVA-7: Sci-Fi Quantum Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>⚡ NEBULA CALCULATOR | Sci-Fi Scientific Terminal ⚡</title>
     <style>
-        :root {
-            --bg-color: #05080a;
-            --panel-bg: rgba(10, 25, 30, 0.8);
-            --neon-cyan: #00f2ff;
-            --neon-magenta: #bc13fe;
-            --text-color: #e0fbfc;
-            --glass-border: rgba(0, 242, 255, 0.2);
-            --button-hover: rgba(0, 242, 255, 0.15);
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, 'Orbitron', sans-serif;
+            box-sizing: border-box;
+            user-select: none;
         }
 
         body {
-            background: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05) 0%, transparent 70%),
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 100%, 100% 4px, 3px 100%;
-            height: 100vh;
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            color: var(--text-color);
+            font-family: 'Segoe UI', 'Orbitron', 'Courier New', monospace;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Animated Grid Background */
-        .grid-bg {
+        /* Animated starfield & sci-fi aura */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(var(--glass-border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(60deg) translateY(-10%);
-            z-index: -1;
-            animation: grid-move 20s linear infinite;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                              radial-gradient(3px 3px at 80px 200px, #6efff0, rgba(0,0,0,0));
+            background-size: 200px 200px, 300px 300px;
+            background-repeat: repeat;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: starShift 40s linear infinite;
+            z-index: 0;
         }
 
-        @keyframes grid-move {
-            from { transform: perspective(500px) rotateX(60deg) translateY(0); }
-            to { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        @keyframes starShift {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 400px 400px, -300px 200px; }
         }
 
-        .calc-container {
-            width: 850px;
-            height: 600px;
-            background: var(--panel-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+        /* Main container - glassmorphic sci-fi panel */
+        .calculator-container {
             display: flex;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1300px;
+            width: 100%;
             position: relative;
-            overflow: hidden;
-            animation: power-on 0.8s ease-out;
+            z-index: 10;
+            backdrop-filter: blur(2px);
         }
 
-        @keyframes power-on {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); filter: brightness(3); }
-            100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); }
-        }
-
-        /* Calculator Main Section */
-        .main-engine {
+        /* Calculator Core Panel */
+        .calc-core {
             flex: 2;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--glass-border);
-        }
-
-        .display-unit {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 10px;
+            min-width: 320px;
+            background: rgba(8, 18, 28, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 48px;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0, 255, 255, 0.3), inset 0 1px 1px rgba(255,255,255,0.1);
             padding: 20px;
+            transition: all 0.3s ease;
+            animation: floatGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes floatGlow {
+            0% { box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 15px rgba(0, 255, 255, 0.3); transform: translateY(0px);}
+            50% { box-shadow: 0 25px 45px rgba(0,0,0,0.7), 0 0 28px rgba(0, 255, 255, 0.7); transform: translateY(-5px);}
+            100% { box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 15px rgba(0, 255, 255, 0.3); transform: translateY(0px);}
+        }
+
+        /* Display Area */
+        .display-section {
             margin-bottom: 25px;
-            text-align: right;
-            position: relative;
-            box-shadow: inset 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
-        #prev-op {
+        .expression-panel {
+            background: #010a14;
+            border-radius: 32px;
+            padding: 15px 20px;
+            border: 1px solid #0ff8;
+            box-shadow: inset 0 0 12px #0ff2, 0 4px 12px black;
+        }
+
+        #historyPreview {
             font-size: 0.9rem;
-            color: var(--neon-cyan);
-            opacity: 0.7;
-            height: 20px;
+            color: #6effcc;
+            font-family: monospace;
+            min-height: 28px;
+            text-align: right;
+            letter-spacing: 1px;
+            word-break: break-all;
+            opacity: 0.9;
+            text-shadow: 0 0 4px cyan;
+        }
+
+        #display {
+            width: 100%;
+            background: transparent;
+            border: none;
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #e0f2fe;
+            text-align: right;
+            outline: none;
+            font-family: 'Orbitron', monospace;
             letter-spacing: 2px;
+            text-shadow: 0 0 6px #0ff;
         }
 
-        #current-op {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-top: 5px;
-            text-shadow: 0 0 10px var(--neon-cyan);
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .keypad {
+        /* Button Grid - Sci-fi Hologram */
+        .button-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 12px;
-            flex-grow: 1;
         }
 
         button {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            color: var(--text-color);
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            padding: 16px 6px;
+            border-radius: 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: 'Segoe UI', 'Orbitron', monospace;
+            color: #bbf0ff;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s ease;
+            transition: all 0.15s linear;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
         }
 
         button:hover {
-            background: var(--button-hover);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
-            transform: translateY(-2px);
+            background: #0ff22a;
+            color: #010e1a;
+            border-color: #fff;
+            transform: scale(0.96);
+            box-shadow: 0 0 15px cyan;
+            text-shadow: none;
         }
 
-        button:active { transform: translateY(1px); }
+        button:active {
+            transform: scale(0.92);
+        }
 
-        .op-btn { color: var(--neon-cyan); font-weight: bold; }
-        .sci-btn { font-size: 0.8rem; color: #7de2ff; }
-        .equals { 
-            grid-column: span 2; 
-            background: linear-gradient(45deg, #00c3ff, #bc13fe); 
-            border: none;
-            color: white;
+        .sci-fn {
+            background: #1e2a3ecc;
+            color: #9efff0;
+            border-color: #ff66cc88;
+            font-size: 1rem;
+        }
+
+        .equals-btn {
+            background: linear-gradient(135deg, #0ff, #00a6c4);
+            color: #010101;
             font-weight: bold;
+            text-shadow: none;
+            border: none;
+            box-shadow: 0 0 12px cyan;
         }
 
-        /* Sidebar/History Section */
-        .sidebar {
+        .clear-btn {
+            background: #cc3366cc;
+            color: white;
+            border-color: #ff88aa;
+        }
+
+        /* History Panel - Neon DataStream */
+        .history-panel {
             flex: 1;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 25px;
+            min-width: 260px;
+            background: rgba(2, 12, 22, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid #ff44dd88;
+            box-shadow: 0 0 25px rgba(255, 0, 212, 0.3);
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            animation: pulseBorder 3s infinite;
         }
 
-        .sidebar h2 {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            color: var(--neon-cyan);
+        @keyframes pulseBorder {
+            0% { border-color: #ff44dd88; box-shadow: 0 0 15px #ff44dd55;}
+            50% { border-color: #0ffaaa; box-shadow: 0 0 28px #0ffaaa;}
+            100% { border-color: #ff44dd88; box-shadow: 0 0 15px #ff44dd55;}
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 2px solid cyan;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
 
-        #history-log {
-            flex-grow: 1;
+        .history-header h3 {
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 2px;
+            color: #0ff;
+            text-shadow: 0 0 3px magenta;
+            font-size: 1.5rem;
+        }
+
+        #clearHistory {
+            background: none;
+            border: 1px solid #ff5599;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            box-shadow: none;
+            color: #ffaacc;
+        }
+
+        #clearHistory:hover {
+            background: #ff3366;
+            color: black;
+            border-color: white;
+        }
+
+        .history-list {
+            max-height: 480px;
             overflow-y: auto;
-            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 6px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: #02101e;
+            border-radius: 8px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: cyan;
+            border-radius: 8px;
         }
 
         .history-item {
-            padding: 10px;
-            border-left: 2px solid var(--neon-magenta);
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.02);
-            animation: slideIn 0.3s ease-out;
+            background: #0a1424aa;
+            border-left: 5px solid #0ff;
+            padding: 12px 12px;
+            border-radius: 20px;
+            font-family: monospace;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            word-break: break-word;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .history-item:hover {
+            background: #1f3a5faa;
+            transform: translateX(6px);
+            border-left-color: #ff66cc;
         }
 
-        /* Scanline Effect */
-        .calc-container::after {
-            content: " ";
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            z-index: 10;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+        .hist-expr {
+            font-size: 0.9rem;
+            color: #b5f0ff;
         }
 
+        .hist-result {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #f0b3ff;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .empty-history {
+            color: #6c7a89;
+            text-align: center;
+            padding: 30px 10px;
+            font-style: italic;
+        }
+
+        /* Animation for new entries */
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateX(30px);}
+            to { opacity: 1; transform: translateX(0);}
+        }
+
+        .history-item {
+            animation: fadeSlide 0.25s ease;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #0ff5;
+            margin-top: 20px;
+            grid-column: span 2;
+        }
+
+        @media (max-width: 780px) {
+            .button-grid { gap: 8px; }
+            button { padding: 12px 3px; font-size: 0.9rem; }
+            #display { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
-
-    <div class="grid-bg"></div>
-
-    <div class="calc-container">
-        <!-- Main Calculation Area -->
-        <section class="main-engine">
-            <div class="display-unit">
-                <div id="prev-op"></div>
-                <div id="current-op">0</div>
+<div class="calculator-container">
+    <div class="calc-core">
+        <div class="display-section">
+            <div class="expression-panel">
+                <div id="historyPreview"></div>
+                <input type="text" id="display" value="0" readonly>
             </div>
-
-            <div class="keypad">
-                <!-- Row 1 -->
-                <button class="sci-btn" onclick="pushValue('Math.sin(')">SIN</button>
-                <button class="sci-btn" onclick="pushValue('Math.cos(')">COS</button>
-                <button class="sci-btn" onclick="pushValue('Math.tan(')">TAN</button>
-                <button class="op-btn" onclick="clearAll()">AC</button>
-                <button class="op-btn" onclick="deleteLast()">DEL</button>
-
-                <!-- Row 2 -->
-                <button class="sci-btn" onclick="pushValue('Math.PI')">π</button>
-                <button class="sci-btn" onclick="pushValue('Math.log10(')">LOG</button>
-                <button class="sci-btn" onclick="pushValue('**')">EXP</button>
-                <button class="sci-btn" onclick="pushValue('(')">(</button>
-                <button class="sci-btn" onclick="pushValue(')')">)</button>
-
-                <!-- Row 3 -->
-                <button onclick="pushValue('7')">7</button>
-                <button onclick="pushValue('8')">8</button>
-                <button onclick="pushValue('9')">9</button>
-                <button class="op-btn" onclick="pushValue('/')">÷</button>
-                <button class="sci-btn" onclick="pushValue('Math.sqrt(')">√</button>
-
-                <!-- Row 4 -->
-                <button onclick="pushValue('4')">4</button>
-                <button onclick="pushValue('5')">5</button>
-                <button onclick="pushValue('6')">6</button>
-                <button class="op-btn" onclick="pushValue('*')">×</button>
-                <button class="sci-btn" onclick="pushValue('%')">MOD</button>
-
-                <!-- Row 5 -->
-                <button onclick="pushValue('1')">1</button>
-                <button onclick="pushValue('2')">2</button>
-                <button onclick="pushValue('3')">3</button>
-                <button class="op-btn" onclick="pushValue('-')">-</button>
-                <button class="sci-btn" onclick="pushValue('Math.E')">e</button>
-
-                <!-- Row 6 -->
-                <button onclick="pushValue('0')">0</button>
-                <button onclick="pushValue('.')">.</button>
-                <button class="op-btn" onclick="pushValue('+')">+</button>
-                <button class="equals" onclick="calculate()">PROCESS RESULT</button>
-            </div>
-        </section>
-
-        <!-- History Sidebar -->
-        <aside class="sidebar">
-            <h2>HISTORY_LOG</h2>
-            <div id="history-log">
-                <!-- Dynamic Content -->
-            </div>
-        </aside>
-    </div>
-
-    <script>
-        const currentDisplay = document.getElementById('current-op');
-        const prevDisplay = document.getElementById('prev-op');
-        const historyLog = document.getElementById('history-log');
-
-        let calculationString = "";
-
-        function pushValue(val) {
-            if (currentDisplay.innerText === "0" && val !== ".") {
-                calculationString = val;
-            } else {
-                calculationString += val;
-            }
-            updateDisplay();
-            playClickSound();
-        }
-
-        function clearAll() {
-            calculationString = "";
-            currentDisplay.innerText = "0";
-            prevDisplay.innerText = "";
-        }
-
-        function deleteLast() {
-            calculationString = calculationString.slice(0, -1);
-            if (calculationString === "") {
-                currentDisplay.innerText = "0";
-            } else {
-                updateDisplay();
-            }
-        }
-
-        function updateDisplay() {
-            // Making it look cleaner for the user
-            let formatted = calculationString
-                .replace(/Math\.sin\(/g, 'sin(')
-                .replace(/Math\.cos\(/g, 'cos(')
-                .replace(/Math\.tan\(/g, 'tan(')
-                .replace(/Math\.log10\(/g, 'log(')
-                .replace(/Math\.PI/g, 'π')
-                .replace(/Math\.E/g, 'e')
-                .replace(/Math\.sqrt\(/g, '√(')
-                .replace(/\*\*/g, '^');
+        </div>
+        <div class="button-grid">
+            <!-- Row 1: Sci-fi functions -->
+            <button class="sci-fn" data-action="sin">sin</button>
+            <button class="sci-fn" data-action="cos">cos</button>
+            <button class="sci-fn" data-action="tan">tan</button>
+            <button class="sci-fn" data-action="asin">asin</button>
+            <button class="sci-fn" data-action="acos">acos</button>
+            <button class="sci-fn" data-action="atan">atan</button>
             
-            currentDisplay.innerText = formatted || "0";
+            <!-- Row 2: more scientific -->
+            <button class="sci-fn" data-action="log">log₁₀</button>
+            <button class="sci-fn" data-action="ln">ln</button>
+            <button class="sci-fn" data-action="sqrt">√</button>
+            <button class="sci-fn" data-action="pow2">x²</button>
+            <button class="sci-fn" data-action="pow3">x³</button>
+            <button class="sci-fn" data-action="exp">eˣ</button>
+            
+            <!-- Row 3: constants & brackets -->
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+            <button class="sci-fn" data-action="pi">π</button>
+            <button data-value="(">(</button>
+            <button data-value=")">)</button>
+            
+            <!-- Row 4 -->
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+            <button class="sci-fn" data-action="econst">e</button>
+            <button data-value="^">^</button>
+            <button data-value="%">%</button>
+            
+            <!-- Row 5 -->
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button class="sci-fn" data-action="fact">n!</button>
+            <button data-value="*">×</button>
+            <button data-value="/">÷</button>
+            
+            <!-- Row 6 -->
+            <button data-value="0">0</button>
+            <button data-value=".">.</button>
+            <button class="clear-btn" data-action="clear">AC</button>
+            <button data-action="backspace">⌫</button>
+            <button data-value="+">+</button>
+            <button data-value="-">-</button>
+            
+            <!-- Row 7: equals and extra -->
+            <button class="equals-btn" data-action="equals" style="grid-column: span 3;">= ENTER</button>
+            <button class="sci-fn" data-action="abs">|x|</button>
+            <button class="sci-fn" data-action="recip">1/x</button>
+        </div>
+    </div>
+    
+    <div class="history-panel">
+        <div class="history-header">
+            <h3>📡 TIME-LOG 📜</h3>
+            <button id="clearHistory">⟳ PURGE</button>
+        </div>
+        <div id="historyList" class="history-list">
+            <div class="empty-history">⚡ waiting for calculations ⚡</div>
+        </div>
+        <div style="margin-top: 12px; font-size: 10px; text-align: center; color: #0ff8;">~ click history to restore ~</div>
+    </div>
+</div>
+
+<script>
+    // ------------------- SCI-FI SCIENTIFIC CORE -------------------
+    let currentInput = "0";
+    let lastExpression = "";
+    let historyEntries = [];  // store { expr, result, rawResult }
+    let lastResult = null;
+    
+    const displayElem = document.getElementById("display");
+    const historyPreviewSpan = document.getElementById("historyPreview");
+    const historyContainer = document.getElementById("historyList");
+    
+    // Helper: update main display
+    function updateDisplay() {
+        displayElem.value = currentInput;
+    }
+    
+    // Evaluate expression safely with advanced scientific functions
+    function evaluateExpression(expr) {
+        // Prepare expression: replace ^ with **, handle percentage, constants, functions
+        let processed = expr.trim();
+        if (processed === "") return "ERROR";
+        
+        try {
+            // Replace π and e
+            processed = processed.replace(/π/g, 'Math.PI');
+            processed = processed.replace(/(?<!\w)e(?!\w)/g, 'Math.E');
+            
+            // handle power ^
+            processed = processed.replace(/\^/g, '**');
+            
+            // percentage: e.g., 50% -> 50/100, but also 10+20%? basic handling: treat x% as x/100
+            processed = processed.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+            
+            // SCIENTIFIC FUNCTION MAPPING (safe)
+            // sin, cos, tan, asin, acos, atan, sqrt, log, ln, exp, abs, factorial custom
+            // factorial and specials handled separately with custom function resolver
+            // we need to wrap factorial, x², x³, recip before eval
+            // let's preprocess x² , x³ , 1/x, sqrt, and factorial
+            
+            // square & cube custom pattern: replace number² or (expr)² ? simple: x² -> pow(x,2)
+            processed = processed.replace(/([\d\.]+|\([^)]+\))²/g, 'Math.pow($1,2)');
+            processed = processed.replace(/([\d\.]+|\([^)]+\))³/g, 'Math.pow($1,3)');
+            processed = processed.replace(/√\(([^)]+)\)/g, 'Math.sqrt($1)');
+            processed = processed.replace(/√([\d\.]+)/g, 'Math.sqrt($1)');
+            
+            // reciprocal 1/x (but must be after number detection)
+            processed = processed.replace(/1\/([\d\.]+|\([^)]+\))/g, '(1/$1)');
+            
+            // factorial custom (n!)
+            const factRegex = /(\d+|\([^)]+\))!/g;
+            processed = processed.replace(factRegex, (match, p1) => {
+                let num = evaluateSimpleNumber(p1);
+                if (isNaN(num)) return 'NaN';
+                return factorial(num);
+            });
+            
+            // functions: sin, cos, tan, asin, acos, atan, log, ln, exp, abs
+            processed = processed.replace(/sin\(/g, 'Math.sin(');
+            processed = processed.replace(/cos\(/g, 'Math.cos(');
+            processed = processed.replace(/tan\(/g, 'Math.tan(');
+            processed = processed.replace(/asin\(/g, 'Math.asin(');
+            processed = processed.replace(/acos\(/g, 'Math.acos(');
+            processed = processed.replace(/atan\(/g, 'Math.atan(');
+            processed = processed.replace(/log\(/g, 'Math.log10(');
+            processed = processed.replace(/ln\(/g, 'Math.log(');
+            processed = processed.replace(/exp\(/g, 'Math.exp(');
+            processed = processed.replace(/abs\(/g, 'Math.abs(');
+            processed = processed.replace(/sqrt\(/g, 'Math.sqrt(');
+            
+            // Evaluate using Function constructor (safe math context)
+            const evalFunc = new Function('return (' + processed + ')');
+            let result = evalFunc();
+            if (isNaN(result) || !isFinite(result)) throw new Error("Math Error");
+            // round to 10 decimal for cleanliness
+            return parseFloat(result.toFixed(10));
+        } catch (e) {
+            console.warn(e);
+            return "ERROR";
         }
-
-        function calculate() {
-            try {
-                let expression = calculationString;
-                // Auto-close brackets if user forgot
-                const openBrackets = (expression.match(/\(/g) || []).length;
-                const closeBrackets = (expression.match(/\)/g) || []).length;
-                for(let i=0; i < (openBrackets - closeBrackets); i++) {
-                    expression += ")";
-                }
-
-                const result = eval(expression);
-                
-                if (result === undefined) return;
-
-                // Add to history
-                addToHistory(currentDisplay.innerText, result);
-
-                prevDisplay.innerText = currentDisplay.innerText + " =";
-                currentDisplay.innerText = Number.isInteger(result) ? result : result.toFixed(4);
-                calculationString = result.toString();
-
-            } catch (error) {
-                currentDisplay.innerText = "SYSTEM_ERROR";
-                setTimeout(clearAll, 1500);
-            }
+    }
+    
+    function evaluateSimpleNumber(expr) {
+        try {
+            let simple = expr;
+            if (simple.includes('π')) simple = simple.replace(/π/g, 'Math.PI');
+            if (simple.includes('e') && !simple.includes('exp')) simple = simple.replace(/e/g, 'Math.E');
+            const fn = new Function('return (' + simple + ')');
+            let val = fn();
+            return isNaN(val) ? NaN : val;
+        } catch(e) { return NaN; }
+    }
+    
+    function factorial(n) {
+        if (n < 0) return NaN;
+        if (n === 0 || n === 1) return 1;
+        if (n > 170) return Infinity;
+        let f = 1;
+        for (let i = 2; i <= n; i++) f *= i;
+        return f;
+    }
+    
+    // Helper to handle button actions (build expression)
+    function handleValue(val) {
+        if (currentInput === "0" && val !== "." && !isNaN(val)) {
+            currentInput = val;
+        } else {
+            currentInput += val;
         }
-
-        function addToHistory(op, res) {
-            const item = document.createElement('div');
-            item.className = 'history-item';
-            item.innerHTML = `
-                <div style="color: #666; font-size: 0.7rem;">${new Date().toLocaleTimeString()}</div>
-                <div>${op}</div>
-                <div style="color: var(--neon-cyan); font-weight: bold;">> ${res}</div>
-            `;
-            historyLog.prepend(item);
+        updateDisplay();
+    }
+    
+    function handleFunction(action) {
+        switch (action) {
+            case 'sin': currentInput += 'sin('; break;
+            case 'cos': currentInput += 'cos('; break;
+            case 'tan': currentInput += 'tan('; break;
+            case 'asin': currentInput += 'asin('; break;
+            case 'acos': currentInput += 'acos('; break;
+            case 'atan': currentInput += 'atan('; break;
+            case 'log': currentInput += 'log('; break;
+            case 'ln': currentInput += 'ln('; break;
+            case 'sqrt': currentInput += '√('; break;
+            case 'pow2': currentInput += '²'; break;
+            case 'pow3': currentInput += '³'; break;
+            case 'exp': currentInput += 'exp('; break;
+            case 'pi': currentInput += 'π'; break;
+            case 'econst': currentInput += 'e'; break;
+            case 'fact': currentInput += '!'; break;
+            case 'abs': currentInput += 'abs('; break;
+            case 'recip': currentInput += '1/('; break;
+            default: break;
         }
-
-        // Haptic-like visual feedback
-        function playClickSound() {
-            currentDisplay.style.textShadow = "0 0 20px #fff";
-            setTimeout(() => {
-                currentDisplay.style.textShadow = "0 0 10px var(--neon-cyan)";
-            }, 100);
+        updateDisplay();
+    }
+    
+    function clearAll() {
+        currentInput = "0";
+        updateDisplay();
+        historyPreviewSpan.innerText = "";
+    }
+    
+    function backspace() {
+        if (currentInput.length === 1 || (currentInput === "0")) {
+            currentInput = "0";
+        } else {
+            currentInput = currentInput.slice(0, -1);
+            if (currentInput === "") currentInput = "0";
         }
-
-        // Keyboard Support
-        document.addEventListener('keydown', (e) => {
-            if (e.key >= 0 && e.key <= 9) pushValue(e.key);
-            if (e.key === '+') pushValue('+');
-            if (e.key === '-') pushValue('-');
-            if (e.key === '*') pushValue('*');
-            if (e.key === '/') pushValue('/');
-            if (e.key === 'Enter' || e.key === '=') calculate();
-            if (e.key === 'Backspace') deleteLast();
-            if (e.key === 'Escape') clearAll();
+        updateDisplay();
+    }
+    
+    // Add entry to history panel (rich)
+    function addToHistory(expression, resultValue) {
+        let resultStr = (typeof resultValue === 'number') ? resultValue.toString() : resultValue;
+        if (resultStr === "ERROR") return;
+        const newEntry = { expr: expression, result: resultStr, rawResult: resultValue };
+        historyEntries.unshift(newEntry);
+        if (historyEntries.length > 20) historyEntries.pop();
+        renderHistoryPanel();
+    }
+    
+    function renderHistoryPanel() {
+        if (historyEntries.length === 0) {
+            historyContainer.innerHTML = '<div class="empty-history">✨ no quantum traces ✨</div>';
+            return;
+        }
+        historyContainer.innerHTML = "";
+        historyEntries.forEach((entry, idx) => {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.setAttribute('data-index', idx);
+            div.innerHTML = `<div class="hist-expr">⚡ ${escapeHtml(entry.expr)}</div>
+                             <div class="hist-result">= ${escapeHtml(entry.result)}</div>`;
+            div.addEventListener('click', () => {
+                // restore expression to current input
+                currentInput = entry.expr;
+                updateDisplay();
+                // preview last result?
+                historyPreviewSpan.innerText = `↻ last: ${entry.result}`;
+                setTimeout(() => {
+                    if (historyPreviewSpan.innerText.includes('last')) historyPreviewSpan.innerText = "";
+                }, 1800);
+            });
+            historyContainer.appendChild(div);
         });
-    </script>
-</body>
-</html>
+    }
+    
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;});}
+    
+    function computeEquals() {
+        let expr = currentInput;
+        if (expr === "" || expr === "0") return;
+        // show temporary processing animation
+        let result = evaluateExpression(expr);
+        if (result === "ERROR") {
+            historyPreviewSpan.innerText = "⚠️ PARSE ERROR ⚠️";
+            setTimeout(() => { if(historyPreviewSpan.innerText.includes("ERROR")) historyPreviewSpan.innerText = ""; }, 1500);
+            return;
+        }
+        let resultStr = result.toString();
+        currentInput = resultStr;
+        updateDisplay();
+        // store to history with original expression
+        addToHistory(expr, result);
+        historyPreviewSpan.innerText = `✓ result: ${resultStr}`;
+        setTimeout(() => {
+            if (historyPreviewSpan.innerText === `✓ result: ${resultStr}`) historyPreviewSpan.innerText = "";
+        }, 2000);
+        lastResult = result;
+    }
+    
+    // Clear history handler
+    document.getElementById("clearHistory").addEventListener("click", () => {
+        historyEntries = [];
+        renderHistoryPanel();
+        historyPreviewSpan.innerText = "🧹 history erased 🧹";
+        setTimeout(() => { if(historyPreviewSpan.innerText.includes("erased")) historyPreviewSpan.innerText = ""; }, 1200);
+    });
+    
+    // attach event listeners to all buttons
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (btn.hasAttribute("data-value")) {
+                let val = btn.getAttribute("data-value");
+                handleValue(val);
+            } 
+            else if (btn.hasAttribute("data-action")) {
+                let act = btn.getAttribute("data-action");
+                if (act === "clear") clearAll();
+                else if (act === "backspace") backspace();
+                else if (act === "equals") computeEquals();
+                else handleFunction(act);
+            }
+        });
+    });
+    
+    // keyboard support: futuristic
+    window.addEventListener("keydown", (e) => {
+        const key = e.key;
+        if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '(' || key === ')' || key === '%' || key === '^') {
+            e.preventDefault();
+            handleValue(key);
+        } else if (key === 'Enter') {
+            e.preventDefault();
+            computeEquals();
+        } else if (key === 'Backspace') {
+            e.preventDefault();
+            backspace();
+        } else if (key === 'Escape') {
+            e.preventDefault();
+            clearAll();
+        } else if (key === 's' || key === 'S') {
+            e.preventDefault();
+            handleFunction('sin');
+        } else if (key === 'c') {
+            e.preventDefault();
+            handleFunction('cos');
+        }
+    });
+    
+    // initial rendering
+    renderHistoryPanel();
+    updateDisplay();
+    
+    // floating neon pulse effect on display
+    setInterval(() => {
+        if (document.activeElement === displayElem) {
+            displayElem.style.textShadow = "0 0 12px #ff66cc";
+            setTimeout(() => displayElem.style.textShadow = "0 0 6px #0ff", 200);
+        }
+    }, 800);
+</script>
 </body>
 </html>
